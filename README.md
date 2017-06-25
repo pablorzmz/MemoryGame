@@ -51,3 +51,5 @@ Ahora, **¿Qué debe hacer el jugador?**. Pues bien, ahora con las imágenes en 
             
 ### ¿Con quién me puedo contactar?
 Desarrollador: Jose Pablo Ramírez Méndez | Correo electrónico: jose.ramirez16@ucr.ac.cr
+
+Imagenes tomadas de: [Open Clipart](https://openclipart.org/)
