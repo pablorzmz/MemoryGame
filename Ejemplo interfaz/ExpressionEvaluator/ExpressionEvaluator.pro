@@ -8,7 +8,9 @@ INCLUDEPATH += .
 CONFIG +=c++11
 
 # Input
-HEADERS += ExpressionEvaluator.h
+HEADERS += ExpressionEvaluator.h \
+    expressionevaluatorapp.h
 
 SOURCES += \
-    main.cpp
+    main.cpp \
+    expressionevaluatorapp.cpp
