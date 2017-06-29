@@ -1,24 +1,21 @@
 #include "expressionevaluatorapp.h"
+#include "mainwindow.h"
 
 #include <QApplication>
 #include <QWidget>
 #include <QTextEdit>
 #include <QVBoxLayout>
 
-ExpressionEvaluatorApp::ExpressionEvaluatorApp(int &argc, char *argv[])
-:QApplication(argc,argv)
+ExpressionEvaluatorApp::ExpressionEvaluatorApp(int& argc, char* argv[])
+   //construye los miembors de la clase base para que incialice los miembros para mi
+    : QApplication(argc, argv)
 {
-    //Si lo hacemos en memoria dinámica, si debemos eliminarlo
-    QTextEdit* input = new QTextEdit();
-    input->setText("Hola mundo!");
-    QVBoxLayout* layout = new QVBoxLayout();
-    layout->addWidget(input);
-    windows->setLayout(layout);
-    //esta en memoria de pila, se destruye automáticamente.
-    windows->show();
-    //Necesitamos un ciclo para que el programa
-    //siga ejecutándose
+    window = new MainWindow();
+}
 
+ExpressionEvaluatorApp::~ExpressionEvaluatorApp()
+{
+   delete window;
 }
 
 

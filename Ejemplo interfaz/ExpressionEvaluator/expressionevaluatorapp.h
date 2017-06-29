@@ -3,20 +3,16 @@
 
 #include <QApplication>
 
+class MainWindow;
 
-////////hereda para que se comporte como un aplication
-class ExpressionEvaluatorApp: public QApplication
+class ExpressionEvaluatorApp : public QApplication
 {
-protected:
-QWidget windows;
+  protected:
+   MainWindow* window;
 
-public:
-    ExpressionEvaluatorApp(int& argc, char *argv[]);
-
-~ExpressionEvaluatorApp()
-    {
-     delete windows;
-    }
+  public:
+   ExpressionEvaluatorApp(int& argc, char* argv[]);
+   ~ExpressionEvaluatorApp();
 };
 
 #endif // EXPRESSIONEVALUATORAPP_H

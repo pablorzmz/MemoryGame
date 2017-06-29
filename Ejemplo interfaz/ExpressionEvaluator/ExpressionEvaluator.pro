@@ -9,8 +9,10 @@ CONFIG +=c++11
 
 # Input
 HEADERS += ExpressionEvaluator.h \
-    expressionevaluatorapp.h
+    expressionevaluatorapp.h \
+    mainwindow.h
 
 SOURCES += \
     main.cpp \
-    expressionevaluatorapp.cpp
+    expressionevaluatorapp.cpp \
+    mainwindow.cpp

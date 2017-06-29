@@ -1,10 +1,13 @@
 #ifndef EXPRESSIONEVALUATOR_H
 #define EXPRESSIONEVALUATOR_H
-/*
+
+//ESTE DEBERIA DE SER EL MODELO
+
+
 #include <cctype>
 #include <iostream>
 
-#include "Stack.h"
+#include "QStack"
 
 /// Evaluates an arithmetic expression where tokens are separated by space.
 /// Uses a simplification of Dijkstra's Shunting-yard algorithm
@@ -15,9 +18,9 @@ class ExpressionEvaluator
 {
   private:
 	// Stack for numbers: 'values'
-	Stack<DataType> values;
+    QStack<DataType> values;
 	// Stack for Operators: 'ops'
-	Stack<char> ops;
+    QStack<char> ops;
 
 	// Default: constructor, (1) copy constructor, (2) move constructor, (3) destructor,
 	// (4) copy assignment operator and (5) move assignment oeprator are fine for this class
@@ -79,7 +82,9 @@ class ExpressionEvaluator
 			applyOperator();
 
 		// Top of 'values' contains result, return it
-		return values.pop();
+        if(values.empty())
+            throw std::underflow_error("Error");
+        return values.pop();
 	}
 
 	// Returns true if 'op2' has higher or same precedence as 'op1',
@@ -112,5 +117,5 @@ class ExpressionEvaluator
 		return DataType();
 	}
 };
-*/
+
 #endif // EXPRESSIONEVALUATOR_H
