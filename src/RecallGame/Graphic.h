@@ -1,11 +1,16 @@
 #ifndef TUBE_H
 #define TUBE_H
 
+#include <QtMath>
+#include <QGraphicsSvgItem>
+#include <QGraphicsScene>
 
-class Tube
+class Graphic: public QGraphicsSvgItem
 {
 public:
-    Tube();
+    Graphic();
+    ~Graphic();
+    void setStartPosition();
 };
 
 #endif // TUBE_H
