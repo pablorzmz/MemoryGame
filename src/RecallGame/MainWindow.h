@@ -4,6 +4,7 @@
 #include <QApplication>
 #include <QGraphicsView>
 #include <QGraphicsScene>
+#include <QStyleFactory>
 #include <QSvgRenderer>
 #include <QPushButton>
 #include <QPalette>

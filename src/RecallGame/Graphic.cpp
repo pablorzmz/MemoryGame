@@ -30,6 +30,6 @@ void Graphic::setStartPosition(const qreal x, const qreal y)
 void Graphic::mousePressEvent(QGraphicsSceneMouseEvent * event)
 {
     std::cout<<"TOUCHED("<<this->nombre.toStdString()<<")"<<std::endl;
-    if(!this->nombre.startsWith("background"))
+    if(!this->nombre.startsWith("background")&&this->nombre!="tube")
         this->setVisible(false);
 }

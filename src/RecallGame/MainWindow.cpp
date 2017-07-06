@@ -11,8 +11,11 @@ MainWindow::MainWindow(int &argc, char **argv, int flags)
     M_scene = new QGraphicsScene();
     M_view = new QGraphicsView(M_scene);
     initComponents();
+    this->setApplicationName("Recall game v1.0");
+    this->setStyle(QStyleFactory::create("WindowsVista"));
     M_view->show();
     connect(M_starButton, SIGNAL (released()), this, SLOT (startGame()));
+
 }
 
 void MainWindow::startGame()
