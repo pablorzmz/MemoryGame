@@ -24,17 +24,20 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += main.cpp\
-        MainWindow.cpp \
-    Graphic.cpp \
     Elements.cpp \
-    Controller.cpp
+    ReCallController.cpp \
+    ReCallMainView.cpp \
+    Object.cpp
 
-HEADERS  += MainWindow.h \
-    Graphic.h \
+HEADERS  += \
     Elements.h \
-    Controller.h
+    ReCallController.h \
+    ReCallMainView.h \
+    Object.h
 
 FORMS    +=
 
 RESOURCES += \
     resources.qrc
+
+

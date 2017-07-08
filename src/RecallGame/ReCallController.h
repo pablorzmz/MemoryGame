@@ -1,41 +1,38 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "ReCallMainView.h"
+#include "ReCallController.h"
+#include "Elements.h"
+#include <QSvgRenderer>
+#include <QtMath>
 #include <QApplication>
-#include <QGraphicsView>
 #include <QGraphicsScene>
 #include <QStyleFactory>
-#include <QSvgRenderer>
-#include <QPushButton>
 #include <QPalette>
-#include "Graphic.h"
+#include "Object.h"
 #include "Controller.h"
 
-class QGraphicsView;
-class QGraphicsScene;
-class QGraphicsView;
-class QPushButton;
 
-class MainWindow : public QApplication
+class QGraphicsScene;
+class QPushButton;
+class ReCallMainView;
+
+class ReCallController : public QApplication
 {
     Q_OBJECT
-    protected:
-    QPushButton* M_starButton;
-    QGraphicsScene* M_scene;
-    QGraphicsView* M_view;
-    QSvgRenderer* M_svgRenderer;
-    Graphic* M_tube;
-    Graphic* M_backGround;
-    Controller M_mainController;
+    protected: 
+    QGraphicsScene* m_scene;
+    ReCallMainView* m_view;
+    Elements elements;
 
 
     public:
-    MainWindow(int &argc, char **argv, int flags = ApplicationFlags);
+    ReCallController(int &argc, char **argv, int flags = ApplicationFlags);
     /// Destructor
-    ~MainWindow();
+    ~ReCallController();
     int runGame();
-    void paintBackGround();
-    void initComponents();
+    void loadPics();
 
     private slots:
     void startGame();

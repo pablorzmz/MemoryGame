@@ -1,7 +1,7 @@
 ﻿#ifndef ELEMENTS_H
 #define ELEMENTS_H
 
-#include "Graphic.h"
+#include "Object.h"
 #include <QGraphicsScene>
 #include <QVector>
 #include <QString>
@@ -12,7 +12,7 @@ class Elements
 
 private:
     QVector<QString> nombresSVG;
-    QVector<Graphic*> elementosSGV;
+    QVector<Object*> elementosSGV;
 
 public:
     Elements();

@@ -6,14 +6,14 @@
 #include <QGraphicsScene>
 #include <QString>
 
-class Graphic: public QGraphicsSvgItem
+class Object: public QGraphicsSvgItem
 {
 private:
     QString nombre;
 
 public:
-    Graphic(QString nombre);
-    ~Graphic();
+    Object(QString nombre);
+    ~Object();
     void setStartPosition(const qreal x = 0, const qreal y=0);
     void mousePressEvent(QGraphicsSceneMouseEvent * event);
 

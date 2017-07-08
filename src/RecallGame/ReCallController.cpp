@@ -1,84 +1,41 @@
-#include "MainWindow.h"
+#include "ReCallController.h"
 
-MainWindow::MainWindow(int &argc, char **argv, int flags)
+ReCallController::ReCallController(int &argc, char **argv, int flags)
     : QApplication(argc, argv, flags)
-    , M_scene(nullptr)
-    , M_view(nullptr)
-    ,M_svgRenderer(nullptr)
-    ,M_tube(nullptr)
-    ,M_backGround(nullptr)
+    , m_scene(nullptr)
+    , m_view(nullptr)
+    ,elements()
+
 {
-    M_scene = new QGraphicsScene();
-    M_view = new QGraphicsView(M_scene);
-    initComponents();
+    m_scene = new QGraphicsScene();
+    m_view = new ReCallMainView(m_scene);
+    m_view->initComponents(m_scene);
     this->setApplicationName("Recall game v1.0");
     this->setStyle(QStyleFactory::create("WindowsVista"));
-    M_view->show();
-    connect(M_starButton, SIGNAL (released()), this, SLOT (startGame()));
-
+    elements.addElements();
+    m_view->show();
+    connect(m_view->startButton(), SIGNAL (released()), this, SLOT (startGame()));
 }
 
-void MainWindow::startGame()
+void ReCallController::startGame()
 {
-    M_mainController.loadPics(M_svgRenderer,M_scene,M_tube->x()+3,M_tube->y()+1);
-    M_starButton->setText("Playing");
-    M_starButton->setEnabled(false);
+ this->loadPics();
 }
 
-
-void MainWindow::initComponents()
+void ReCallController::loadPics()
 {
-   //Configuración del botón
-
-    M_starButton= new QPushButton(M_view);
-    M_starButton->setText(tr("PLAY"));
-    M_starButton->setGeometry(QRect(QPoint(4, 4),QSize(75, 50)));
-    QPalette pal = M_starButton->palette();
-    pal.setColor(QPalette::Button, QColor(Qt::yellow));
-    M_starButton->setAutoFillBackground(true);
-    M_starButton->setPalette(pal);
-    M_starButton->update();
-
-    //Configuración inicial del fondo
-    paintBackGround();
-    M_view->setBackgroundBrush(QBrush(Qt::white, Qt::SolidPattern));
-    M_scene->setSceneRect( M_backGround->sceneBoundingRect());
-
-
-    //Se desactivan los scrollbars
-    M_view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    M_view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    M_svgRenderer = new QSvgRenderer(QString(":/pics.svg"), this);
-
-    //Configuración del tubo
-    M_tube = new Graphic("tube");
-    M_tube->setElementId("tube");
-    M_tube->setSharedRenderer(M_svgRenderer);
-    M_scene->addItem(M_tube);
-    M_tube->setStartPosition();
-    M_tube->setZValue(1);
+    elements.loadElements(m_view->m_svgRenderer,this->m_scene,3,3);
+    this->m_view->startButton()->setEnabled(false);
 }
 
-
-int MainWindow::runGame()
+int ReCallController::runGame()
 {
     return exec();
 }
 
 
-void MainWindow::paintBackGround(){
- QSvgRenderer* svgRenderer = new QSvgRenderer(QString(":/backgrounds.svg"), this);
- M_backGround = new Graphic("background");
- M_backGround->setSharedRenderer(svgRenderer);
- M_scene->addItem(M_backGround);
- M_view->fitInView(M_backGround,Qt::KeepAspectRatioByExpanding);
- M_backGround->setZValue(-1);
- M_backGround->setOpacity(0.5);
-}
-
-
-MainWindow::~MainWindow()
+ReCallController::~ReCallController()
 {
-    delete M_scene;
-    delete M_view;    
+    delete m_scene;
+    delete m_view;
 }

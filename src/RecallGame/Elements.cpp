@@ -8,12 +8,12 @@ Elements::Elements()
 #include <iostream>
 void Elements::loadElements(QSvgRenderer* svgRenderer, QGraphicsScene* scene,qreal xReference,qreal yReference)
 {
-    Graphic* temp;
+    Object* temp;
     qreal prueba = 1;
    //se cargar los elementos en el arreglo.
    for(int index = 0; index < nombresSVG.size()/2;++index)
    {
-        temp = new Graphic(nombresSVG[index]);
+        temp = new Object(nombresSVG[index]);
         temp->setElementId(nombresSVG[index]);
         temp->setSharedRenderer(svgRenderer);
         temp->setZValue(-1);

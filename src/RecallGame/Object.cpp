@@ -1,16 +1,16 @@
-#include "Graphic.h"
+#include "Object.h"
 
-Graphic::Graphic(QString nombre)
+Object::Object(QString nombre)
     :nombre(nombre)
 {
 this->setElementId(nombre);
 }
 
-Graphic::~Graphic()
+Object::~Object()
 {
 }
 
-void Graphic::setStartPosition(const qreal x, const qreal y)
+void Object::setStartPosition(const qreal x, const qreal y)
 {
         if(x==0&&y==0)
         {
@@ -27,7 +27,7 @@ void Graphic::setStartPosition(const qreal x, const qreal y)
 
 
 #include <iostream>
-void Graphic::mousePressEvent(QGraphicsSceneMouseEvent * event)
+void Object::mousePressEvent(QGraphicsSceneMouseEvent * event)
 {
     std::cout<<"TOUCHED("<<this->nombre.toStdString()<<")"<<std::endl;
     if(!this->nombre.startsWith("background")&&this->nombre!="tube")
