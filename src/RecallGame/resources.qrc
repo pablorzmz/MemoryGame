@@ -1,6 +1,1 @@
-<RCC>
-    <qresource prefix="/">
-        <file>pics.svg</file>
-        <file>backgrounds.svg</file>
-    </qresource>
-</RCC>
+<RCC/>
