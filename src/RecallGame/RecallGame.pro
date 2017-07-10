@@ -27,13 +27,15 @@ SOURCES += main.cpp\
     Elements.cpp \
     ReCallController.cpp \
     ReCallMainView.cpp \
-    Object.cpp
+    Object.cpp \
+    PropObject.cpp
 
 HEADERS  += \
     Elements.h \
     ReCallController.h \
     ReCallMainView.h \
-    Object.h
+    Object.h \
+    PropObject.h
 
 FORMS    +=
 

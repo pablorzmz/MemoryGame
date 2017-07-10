@@ -7,7 +7,6 @@
 class Controller
 {
 public:
-
     private:
     Elements elements;
 

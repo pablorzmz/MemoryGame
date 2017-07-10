@@ -17,12 +17,33 @@ void Elements::loadElements(QSvgRenderer* svgRenderer, QGraphicsScene* scene,qre
         temp->setElementId(nombresSVG[index]);
         temp->setSharedRenderer(svgRenderer);
         temp->setZValue(-1);
-        temp->setStartPosition(prueba,30);
+        temp->setStartPosition(xReference,yReference);
         scene->addItem(temp);
         elementosSGV.append(temp);
         prueba+=10;
         std::cout<<index<<": Element loaded("<<nombresSVG[index].toStdString()<<")"<<std::endl;
    }
+}
+
+
+void Elements::shuffleObjects()
+{
+    //tomado de cplusplus
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::shuffle(this->elementosSGV.begin(),this->elementosSGV.end(),std::default_random_engine(seed));
+}
+
+QPropertyAnimation* Elements::getObjectAnimation(const int index)
+{
+    return this->elementosSGV[index]->m_animation;
+}
+
+
+void Elements::startInitialAnimation()
+{
+    qreal x = 12;
+    qreal y = 20;    
+    this->elementosSGV[0]->m_animation->start();
 }
 
 

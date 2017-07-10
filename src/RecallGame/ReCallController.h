@@ -9,13 +9,9 @@
 #include <QApplication>
 #include <QGraphicsScene>
 #include <QStyleFactory>
-#include <QPalette>
-#include "Object.h"
-#include "Controller.h"
 
 
 class QGraphicsScene;
-class QPushButton;
 class ReCallMainView;
 
 class ReCallController : public QApplication
@@ -25,6 +21,8 @@ class ReCallController : public QApplication
     QGraphicsScene* m_scene;
     ReCallMainView* m_view;
     Elements elements;
+    int reCallGameLevel;
+    int currentLauchedItems;
 
 
     public:
@@ -33,9 +31,11 @@ class ReCallController : public QApplication
     ~ReCallController();
     int runGame();
     void loadPics();
-
-    private slots:
+    void connectControlAnimationSignals();
     void startGame();
+    void setUpLevelAnimation(const int duration, const int index, const qreal endX, const qreal endY, const qreal beginX, const qreal beginY);
+    private slots:
+    void notify();
 
 };
 
