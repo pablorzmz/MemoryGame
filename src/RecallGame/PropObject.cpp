@@ -33,6 +33,7 @@ void PropObject::mousePressEvent(QGraphicsSceneMouseEvent *event)
        {
         this->m_controller->startGame();
         lauchControl=false;
+        this->setEnabled(false);
         }
 }
 

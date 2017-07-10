@@ -27,6 +27,7 @@ public:
     void startInitialAnimation();
     void shuffleObjects();
     QPropertyAnimation *getObjectAnimation(const int index);
+    void setEnableLauchedObject(int index);
 };
 
 #endif // ELEMENTS_H

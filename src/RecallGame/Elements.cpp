@@ -46,6 +46,13 @@ void Elements::startInitialAnimation()
     this->elementosSGV[0]->m_animation->start();
 }
 
+void Elements::setEnableLauchedObject(int index)
+{
+    for(int count = 0; count < index;++count)
+    {
+        this->elementosSGV[count]->setEnabled(true);
+    }
+}
 
 void Elements::addElements()
 {
@@ -58,4 +65,8 @@ void Elements::addElements()
     nombresSVG.append("girl");
     nombresSVG.append("house");
     nombresSVG.append("horse");
+    nombresSVG.append("bus");
+    nombresSVG.append("monster1");
+    nombresSVG.append("monster2");
+    nombresSVG.append("eleph");
 }

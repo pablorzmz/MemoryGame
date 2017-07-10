@@ -28,8 +28,10 @@ void Object::setStartPosition(const qreal x, const qreal y)
 void Object::setAnimation(int duration,const qreal finalX, const qreal finalY, const qreal startX, const qreal startY)
 {
     m_animation->setDuration(duration);
-    pastX= this->x();
-    pastY=this->y();
+
+        pastX= this->x();
+        pastY=this->y();
+
     if(startX==-1&&startY==-1)
     {
         m_animation->setStartValue(QPointF(this->x(),this->y()));
@@ -38,14 +40,17 @@ void Object::setAnimation(int duration,const qreal finalX, const qreal finalY, c
         m_animation->setStartValue(QPointF(startX,startY));
     }
     m_animation->setEndValue(QPointF(finalX,finalY));
+    this->setEnabled(false);
 }
 
 #include <iostream>
 void Object::mousePressEvent(QGraphicsSceneMouseEvent * event)
 {
     std::cout<<"TOUCHED("<<this->elementId().toStdString()<<")"<<std::endl;
-    this->setAnimation(500,pastX,pastY,-1,-1);
+    this->setAnimation(100,pastX,pastY,this->x(),this->y());
     this->m_animation->start();
+    this->pastX=this->x();
+    this->pastY=this->y();
 }
 
  Object::~Object()

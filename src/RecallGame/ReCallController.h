@@ -9,6 +9,11 @@
 #include <QApplication>
 #include <QGraphicsScene>
 #include <QStyleFactory>
+#include <QSequentialAnimationGroup>
+#include <QPoint>
+#include <QVector>
+#include <random>
+#include <chrono>
 
 
 class QGraphicsScene;
@@ -20,9 +25,12 @@ class ReCallController : public QApplication
     protected: 
     QGraphicsScene* m_scene;
     ReCallMainView* m_view;
+    QSequentialAnimationGroup* m_launchAnimation;
     Elements elements;
     int reCallGameLevel;
-    int currentLauchedItems;
+    QVector<QPoint*> avaiblePositions;
+    double levelLauchSpeed;
+
 
 
     public:
@@ -34,6 +42,9 @@ class ReCallController : public QApplication
     void connectControlAnimationSignals();
     void startGame();
     void setUpLevelAnimation(const int duration, const int index, const qreal endX, const qreal endY, const qreal beginX, const qreal beginY);
+    void setUpAvaiblePositions();
+    void suffleAvaiblePositions();
+
     private slots:
     void notify();
 
