@@ -2,35 +2,33 @@
 
 Elements::Elements()
 {
-    addElements();
+    this->currenTop = new QString("No top yet");
 }
 
-#include <iostream>
+//#include <iostream>
 void Elements::loadElements(QSvgRenderer* svgRenderer, QGraphicsScene* scene,qreal xReference,qreal yReference)
 {
     Object* temp;
-    qreal prueba = 1;
    //se cargar los elementos en el arreglo.
-   for(int index = 0; index < nombresSVG.size()/2;++index)
+   for(int index = 0; index < nombresSVG.size();++index)
    {
-        temp = new Object(nombresSVG[index]);
+        temp = new Object(nombresSVG[index],this->currenTop);
         temp->setElementId(nombresSVG[index]);
         temp->setSharedRenderer(svgRenderer);
         temp->setZValue(-1);
         temp->setStartPosition(xReference,yReference);
         scene->addItem(temp);
         elementosSGV.append(temp);
-        prueba+=10;
-        std::cout<<index<<": Element loaded("<<nombresSVG[index].toStdString()<<")"<<std::endl;
+       //std::cout<<index<<": Element loaded("<<nombresSVG[index].toStdString()<<")"<<std::endl;
    }
 }
 
 
 void Elements::shuffleObjects()
 {
-    //tomado de cplusplus
+    //tomado de cplusplus;
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    std::shuffle(this->elementosSGV.begin(),this->elementosSGV.end(),std::default_random_engine(seed));
+        std::shuffle(this->elementosSGV.begin(),this->elementosSGV.end(),std::default_random_engine(seed));
 }
 
 QPropertyAnimation* Elements::getObjectAnimation(const int index)
@@ -39,13 +37,6 @@ QPropertyAnimation* Elements::getObjectAnimation(const int index)
 }
 
 
-void Elements::startInitialAnimation()
-{
-    qreal x = 12;
-    qreal y = 20;    
-    this->elementosSGV[0]->m_animation->start();
-}
-
 void Elements::setEnableLauchedObject(int index)
 {
     for(int count = 0; count < index;++count)
@@ -53,20 +44,27 @@ void Elements::setEnableLauchedObject(int index)
         this->elementosSGV[count]->setEnabled(true);
     }
 }
+Elements::~Elements()
+{
+    delete this->currenTop;
+}
 
 void Elements::addElements()
 {
-    nombresSVG.append("apple");
-    nombresSVG.append("bunny");
-    nombresSVG.append("cat");
-    nombresSVG.append("dog");
-    nombresSVG.append("watermalon");
-    nombresSVG.append("vespa");
-    nombresSVG.append("girl");
-    nombresSVG.append("house");
     nombresSVG.append("horse");
     nombresSVG.append("bus");
     nombresSVG.append("monster1");
     nombresSVG.append("monster2");
+    nombresSVG.append("monster3");
     nombresSVG.append("eleph");
+    nombresSVG.append("apple");
+    nombresSVG.append("bunny");
+    nombresSVG.append("cat");
+    nombresSVG.append("dog");
+    nombresSVG.append("monster5");
+    nombresSVG.append("sneaker");
+    nombresSVG.append("monster4");
+    nombresSVG.append("girl");
+    nombresSVG.append("house");
+
 }

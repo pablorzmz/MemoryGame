@@ -3,6 +3,6 @@
 
 int main(int argc, char *argv[])
 {
-    ReCallController main(argc, argv);
-    return main.runGame();
+    ReCallController reCallGame(argc, argv);
+    return reCallGame.runGame();
 }
