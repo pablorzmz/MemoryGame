@@ -1,21 +1,21 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "ReCallMainView.h"
-#include "ReCallController.h"
 #include "Elements.h"
-#include <QSvgRenderer>
-#include <QtMath>
+#include <chrono>
 #include <QApplication>
 #include <QGraphicsScene>
-#include <QSequentialAnimationGroup>
-#include <QPushButton>
 #include <QMessageBox>
 #include <QPoint>
-#include <QVector>
+#include <QPushButton>
 #include <QQueue>
+#include <QSequentialAnimationGroup>
+#include <QSvgRenderer>
+#include <QtMath>
+#include <QVector>
 #include <random>
-#include <chrono>
+#include "ReCallMainView.h"
+#include "ReCallController.h"
 
 
 class QGraphicsScene;

@@ -38,13 +38,14 @@ void ReCallController::incrementNextLevel()
     if(this->reCallGameLevel<mySettings.maxGameLevels)
     {
         ++this->reCallGameLevel;
-        this->m_view->m_tube->staticAnimationTimer->stop();
-        this->m_view->m_tube->setElementId("tube");
     }
+    this->m_view->m_tube->stopStaticAnimations();
 }
 
 void ReCallController::startGame()
 {
+    this->m_view->m_title->stopStaticAnimations();
+    this->m_view->m_title->setVisible(false);
    this->loadPics();
 }
 
@@ -58,10 +59,9 @@ void ReCallController::loadPics()
         elements.addElements();
         elements.loadElements(m_view->m_svgRenderer,this->m_scene,x+3,y+5);
         firstload=false;
-        //connect each finished animation
-        for(size_t index= 0; index < this->elements.elementosSGV.size();++index)
+        for(int index= 0; index < this->elements.svgElements.size();++index)
         {
-           connect((this->elements.elementosSGV[index]->animation()), SIGNAL (finished()), this, SLOT (clickedObjectEvaluation()));
+           connect((this->elements.svgElements[index]->animation()), SIGNAL (finished()), this, SLOT (clickedObjectEvaluation()));
         }
     }
     this->connectControlAnimationSignals();
@@ -77,22 +77,21 @@ int ReCallController::runGame()
 void ReCallController::connectControlAnimationSignals()
 {
     this->m_launchAnimation = new QSequentialAnimationGroup;
-    this->elements.shuffleObjects();
+    this->elements.shuffleElements();
     this->suffleAvaiblePositions();
     //Se conectan las animaciones
        for(int index = 0; index < this->reCallGameLevel;++index)
         {
            setUpLevelAnimation(this->levelLauchSpeed,index,this->avaiblePositions[index]->rx(),this->avaiblePositions[index]->ry(),-1,-1);
            this->m_launchAnimation->addAnimation(this->elements.getObjectAnimation(index));
-           this->gameOrderQueue.push_back(this->elements.elementosSGV[index]->getName());
+           this->gameOrderQueue.push_back(this->elements.svgElements[index]->getName());
        }  
     connect((this->m_launchAnimation), SIGNAL (finished()), this, SLOT (incrementNextLevel()));
 }
 
 void ReCallController::setUpLevelAnimation(const int duration,const int index,const qreal endX,const qreal endY,const qreal beginX,const qreal beginY)
 {
-  this->elements.elementosSGV[index]->setAnimation(1,duration,endX,endY,beginX,beginY);
-
+  this->elements.svgElements[index]->setAnimation(1,duration,endX,endY,beginX,beginY);
 }
 
 void ReCallController::setUpAvaiblePositions()
@@ -110,7 +109,7 @@ void ReCallController::setUpAvaiblePositions()
     QPoint* point3 = new QPoint(100,10);
     this->avaiblePositions.push_back(point3);
     //pos 5
-    QPoint* point4 = new QPoint(100,40);
+    QPoint* point4 = new QPoint(100,0);
     this->avaiblePositions.push_back(point4);
     //pos 6
     QPoint* point5 = new QPoint(70,35);
@@ -119,10 +118,10 @@ void ReCallController::setUpAvaiblePositions()
     QPoint* point6 = new QPoint(30,35);
     this->avaiblePositions.push_back(point6);
     //pos 8
-    QPoint* point7 = new QPoint(100,55);
+    QPoint* point7 = new QPoint(100,35);
     this->avaiblePositions.push_back(point7);
     //pos 9
-    QPoint* point8 = new QPoint(85,40);
+    QPoint* point8 = new QPoint(85,30);
     this->avaiblePositions.push_back(point8);
     //pos 10
     QPoint* point9 = new QPoint(85,12);
@@ -137,12 +136,11 @@ void ReCallController::setUpAvaiblePositions()
     QPoint* point12 = new QPoint(10,30);
     this->avaiblePositions.push_back(point12);
     //pos 14
-    QPoint* point13 = new QPoint(120,45);
+    QPoint* point13 = new QPoint(120,30);
     this->avaiblePositions.push_back(point13);
     //pos 15
     QPoint* point14 = new QPoint(120,0);
     this->avaiblePositions.push_back(point14);
-
 
 }
 
@@ -168,7 +166,7 @@ void ReCallController::clickedObjectEvaluation()
      {
          this->incrementScore();
 
-         this->elements.shuffleObjects();
+         this->elements.shuffleElements();
          this->suffleAvaiblePositions();
 
          this->m_view->updateScore(this->mySettings.playerScore);
@@ -239,14 +237,16 @@ void ReCallController::resetGame()
     this->reCallGameLevel=1;
     this->mySettings.playerScore=0;
 
-    for(int index = 0; index < this->elements.elementosSGV.size();++index)
+    for(int index = 0; index < this->elements.svgElements.size();++index)
      {
-        this->elements.elementosSGV[index]->setPos(this->m_view->m_tube->x()+3,this->m_view->m_tube->y()+5);
+        this->elements.svgElements[index]->setPos(this->m_view->m_tube->x()+3,this->m_view->m_tube->y()+5);
      }
     this->gameOrderQueue.clear();
     this->m_view->m_tube->setEnabled(true);
     this->m_view->m_tube->lauchControl=true;
     this->levelLauchSpeed=1000;
     this->suffleAvaiblePositions();
-    this->elements.shuffleObjects();
+    this->elements.shuffleElements();
+    this->m_view->m_title->startStaticAnimations(150);
+    this->m_view->m_title->setVisible(true);
 }

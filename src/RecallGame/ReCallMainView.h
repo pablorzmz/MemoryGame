@@ -1,17 +1,17 @@
 #ifndef RECALLMAINVIEW_H
 #define RECALLMAINVIEW_H
 
-#include "ReCallMainView.h"
-#include "ReCallController.h"
-#include <QGraphicsView>
 #include <QGraphicsScene>
 #include <QGraphicsTextItem>
+#include <QGraphicsView>
 #include "Object.h"
 #include "PropObject.h"
-
+#include "ReCallMainView.h"
+#include "ReCallController.h"
 
 class Object;
 class PropObject;
+
 class ReCallMainView:public QGraphicsView
 {
 Q_OBJECT
@@ -20,6 +20,7 @@ protected:
   PropObject* m_backGround;
   QSvgRenderer* m_svgRenderer;
   QGraphicsTextItem* m_playerScore;
+  PropObject* m_title;
   QString scoreLegend;
   friend class ReCallController;
 

@@ -10,38 +10,38 @@ void Elements::loadElements(QSvgRenderer* svgRenderer, QGraphicsScene* scene,qre
 {
     Object* temp;
    //se cargar los elementos en el arreglo.
-   for(int index = 0; index < nombresSVG.size();++index)
+   for(int index = 0; index < svgNames.size();++index)
    {
-        temp = new Object(nombresSVG[index],this->currenTop);
-        temp->setElementId(nombresSVG[index]);
+        temp = new Object(svgNames[index],this->currenTop);
+        temp->setElementId(svgNames[index]);
         temp->setSharedRenderer(svgRenderer);
         temp->setZValue(-1);
         temp->setStartPosition(xReference,yReference);
         scene->addItem(temp);
-        elementosSGV.append(temp);
+        svgElements.append(temp);
        //std::cout<<index<<": Element loaded("<<nombresSVG[index].toStdString()<<")"<<std::endl;
    }
 }
 
 
-void Elements::shuffleObjects()
+void Elements::shuffleElements()
 {
     //tomado de cplusplus;
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-        std::shuffle(this->elementosSGV.begin(),this->elementosSGV.end(),std::default_random_engine(seed));
+        std::shuffle(this->svgElements.begin(),this->svgElements.end(),std::default_random_engine(seed));
 }
 
 QPropertyAnimation* Elements::getObjectAnimation(const int index)
 {
-    return this->elementosSGV[index]->m_animation;
+    return this->svgElements[index]->m_animation;
 }
 
 
-void Elements::setEnableLauchedObject(int index)
+void Elements::setEnableLauchedObject(const int index)
 {
     for(int count = 0; count < index;++count)
     {
-        this->elementosSGV[count]->setEnabled(true);
+        this->svgElements[count]->setEnabled(true);
     }
 }
 Elements::~Elements()
@@ -51,20 +51,20 @@ Elements::~Elements()
 
 void Elements::addElements()
 {
-    nombresSVG.append("horse");
-    nombresSVG.append("bus");
-    nombresSVG.append("monster1");
-    nombresSVG.append("monster2");
-    nombresSVG.append("monster3");
-    nombresSVG.append("eleph");
-    nombresSVG.append("apple");
-    nombresSVG.append("bunny");
-    nombresSVG.append("cat");
-    nombresSVG.append("dog");
-    nombresSVG.append("monster5");
-    nombresSVG.append("sneaker");
-    nombresSVG.append("monster4");
-    nombresSVG.append("girl");
-    nombresSVG.append("house");
+    svgNames.append("horse");
+    svgNames.append("bus");
+    svgNames.append("monster1");
+    svgNames.append("monster2");
+    svgNames.append("monster3");
+    svgNames.append("eleph");
+    svgNames.append("apple");
+    svgNames.append("bunny");
+    svgNames.append("cat");
+    svgNames.append("dog");
+    svgNames.append("monster5");
+    svgNames.append("sneaker");
+    svgNames.append("monster4");
+    svgNames.append("girl");
+    svgNames.append("house");
 
 }

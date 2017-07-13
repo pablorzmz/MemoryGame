@@ -15,12 +15,17 @@ PropObject::PropObject(QString nombre,ReCallController* controller)
 
 PropObject::~PropObject()
 {
+ delete this->staticAnimationTimer;
+}
 
+void PropObject::startStaticAnimations(const int duration)
+{
+    this->staticAnimationTimer->start(duration);
 }
 
 void PropObject::nextSvgName()
 {
-    currentSVG = ++currentSVG % 5;
+    currentSVG = ++currentSVG % (svgs.size()-1);
     this->setElementId( svgs[currentSVG]);
     //this->moveBy(5,0);
     update();
@@ -28,17 +33,21 @@ void PropObject::nextSvgName()
 
 void PropObject::setStartPosition(const qreal x, const qreal y)
 {
+    qreal xC=0;
+    qreal yC=0;
     if(x==0&&y==0)
     {
-        qreal x = ( scene()->width()- boundingRect().width()) * 0.5;
-        qreal y = ( scene()->height()- boundingRect().height());
-        setPos(x, y);
-    }
-    else
+        xC = ( scene()->width()- boundingRect().width()) * 0.5;
+        yC = ( scene()->height()- boundingRect().height());
+    }else
     {
-        setPos(x,y);
+        xC = ( scene()->width()- boundingRect().width()) * 0.5;
+        yC = y;
     }
+
+    setPos(xC,yC);
 }
+
 void PropObject::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if((this->elementId()=="tube"||
@@ -58,4 +67,12 @@ void PropObject::mousePressEvent(QGraphicsSceneMouseEvent *event)
 void PropObject::setControllerEvent(ReCallController *controller)
 {
     this->m_controller=controller;
+}
+
+void PropObject::stopStaticAnimations()
+{
+    if (this->staticAnimationTimer)
+        this->staticAnimationTimer->stop();
+
+    this->setElementId(this->svgs[0]);
 }

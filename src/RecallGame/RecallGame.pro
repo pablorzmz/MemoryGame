@@ -37,8 +37,6 @@ HEADERS  += \
     Object.h \
     PropObject.h
 
-FORMS    +=
-
 RESOURCES += \
     resources.qrc
 

@@ -6,6 +6,7 @@ ReCallMainView::ReCallMainView(QGraphicsScene *scene)
     ,m_backGround(Q_NULLPTR)
     ,m_svgRenderer(Q_NULLPTR)
     ,m_playerScore(Q_NULLPTR)
+    ,m_title(Q_NULLPTR)
     ,scoreLegend("Player score: ")
 {
 
@@ -44,6 +45,23 @@ void ReCallMainView::initComponents(QGraphicsScene* m_scene)
     m_tube->addSvgName("tube2");
     m_tube->addSvgName("tube3");
     m_tube->addSvgName("tube4");
+
+    //Configuración del titulo
+    m_title = new PropObject("title1");
+    m_title->setSharedRenderer(m_svgRenderer);
+    m_scene->addItem(m_title);
+    m_title->setZValue(1);
+    m_title->setStartPosition(50,this->m_tube->y()-30);
+    m_title->addSvgName("title1");
+    m_title->addSvgName("title2");
+    m_title->addSvgName("title3");
+    m_title->addSvgName("title4");
+    m_title->addSvgName("title5");
+    m_title->addSvgName("title6");
+    m_title->addSvgName("title7");
+    m_title->addSvgName("title8");
+    m_title->addSvgName("title9");
+    m_title->startStaticAnimations(150);
 
 }
 

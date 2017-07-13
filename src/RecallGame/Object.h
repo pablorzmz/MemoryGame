@@ -2,16 +2,14 @@
 #define TUBE_H
 
 #include "Elements.h"
-#include <QGraphicsSvgItem>
 #include <QGraphicsScene>
+#include <QGraphicsSvgItem>
 #include <QString>
 #include <QPropertyAnimation>
 
 class Object: public QGraphicsSvgItem
 {
-
-
-
+    Q_OBJECT
 private:
     QPropertyAnimation *m_animation;
     QPropertyAnimation *m_animation2;
