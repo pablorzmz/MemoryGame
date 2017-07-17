@@ -28,14 +28,18 @@ SOURCES += main.cpp\
     ReCallController.cpp \
     ReCallMainView.cpp \
     Object.cpp \
-    PropObject.cpp
+    PropObject.cpp \
+    ScoreTableModel.cpp \
+    ScoreTableView.cpp
 
 HEADERS  += \
     Elements.h \
     ReCallController.h \
     ReCallMainView.h \
     Object.h \
-    PropObject.h
+    PropObject.h \
+    ScoreTableModel.h \
+    ScoreTableView.h
 
 RESOURCES += \
     resources.qrc

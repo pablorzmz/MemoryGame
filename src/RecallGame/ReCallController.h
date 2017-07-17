@@ -16,6 +16,8 @@
 #include <random>
 #include "ReCallMainView.h"
 #include "ReCallController.h"
+#include "ScoreTableModel.h"
+#include "ScoreTableView.h"
 
 
 class QGraphicsScene;
@@ -32,11 +34,13 @@ class ReCallController : public QApplication
         const int maxGameLevels = 15;
         int scoreIncrement;
         const QString textPlayscoreLabel ="Player score: ";
+        QString playerName;
         int gameDifficulty;
         int speedDecrement;
         int playerScore;
     GameSettings()
     :scoreIncrement(2)
+    ,playerName("")
     ,gameDifficulty(1)
     ,speedDecrement(100)
     ,playerScore(0)
@@ -76,7 +80,8 @@ class ReCallController : public QApplication
     QQueue<QString> gameOrderQueue;
     QMessageBox* m_messages;
     GameSettings mySettings;
-
+    ScoreTableView vistaScores;
+    ScoreTableMode modeloScores;
 
     public:
     ReCallController(int &argc, char **argv, int flags = ApplicationFlags);

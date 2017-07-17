@@ -63,6 +63,11 @@ void ReCallMainView::initComponents(QGraphicsScene* m_scene)
     m_title->addSvgName("title9");
     m_title->startStaticAnimations(150);
 
+    this->setWindowFlags(Qt::Window | Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint);
+    this->setMaximumHeight(this->height());
+    this->setMaximumWidth(this->width()+200);
+    this->setMaximumHeight(this->height());
+    this->setMaximumWidth(this->width()+200);
 }
 
 void ReCallMainView::paintBackGround(QGraphicsScene* m_scene){
@@ -74,14 +79,15 @@ void ReCallMainView::paintBackGround(QGraphicsScene* m_scene){
  m_backGround->setZValue(-1);
  m_backGround->setOpacity(0.5);
 }
-
+#include <iostream>
 ReCallMainView::~ReCallMainView()
 {
+    std::cout<<"Vista se destruye"<<std::endl;
     //ya son de la escena
     //delete this->m_backGround;
     //delete this->m_tube;
-    delete this->m_svgRenderer;
-    delete this->m_playerScore;
+    //delete this->m_svgRenderer;
+    //delete this->m_playerScore;
 }
 
 #include <QFont>

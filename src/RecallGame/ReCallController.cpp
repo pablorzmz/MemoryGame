@@ -9,6 +9,8 @@ ReCallController::ReCallController(int &argc, char **argv, int flags)
     ,reCallGameLevel(1)
     ,levelLauchSpeed(1000)
     ,m_messages(Q_NULLPTR)
+    ,vistaScores()
+    ,modeloScores(0)
 {   
 
     m_scene = new QGraphicsScene();
@@ -23,6 +25,7 @@ ReCallController::ReCallController(int &argc, char **argv, int flags)
     m_view->initComponents(m_scene);
     this->setApplicationName("Recall game v1.0");
     //elements.addElements();
+
 
     this->m_view->m_tube->setControllerEvent(this);
     this->setUpAvaiblePositions();
@@ -69,7 +72,16 @@ void ReCallController::loadPics()
 }
 
 int ReCallController::runGame()
-{
+{        
+    vistaScores.setModel(&modeloScores);
+    vistaScores.setWindowTitle("Players Score");
+   QHeaderView* horizontalHeader = vistaScores.horizontalHeader();
+   horizontalHeader->setSectionResizeMode(QHeaderView::Stretch);
+   vistaScores.setMaximumHeight(this->m_view->height());
+   vistaScores.setMaximumHeight(this->m_view->width());
+   vistaScores.setMinimumHeight(this->m_view->height());
+   vistaScores.setMinimumWidth(this->m_view->width());
+   vistaScores.show();
     return exec();
 }
 
@@ -150,12 +162,14 @@ void ReCallController::suffleAvaiblePositions()
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
     std::shuffle(this->avaiblePositions.begin(),this->avaiblePositions.end(),std::default_random_engine(seed));
 }
+#include <iostream>
 
 ReCallController::~ReCallController()
 {
     delete m_scene;
     delete m_view;
     delete m_messages;
+    std::cout<<"Controlador se destruye"<<std::endl;
 }
 
 

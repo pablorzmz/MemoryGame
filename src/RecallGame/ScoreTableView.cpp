@@ -4,3 +4,8 @@ ScoreTableView::ScoreTableView()
 {
 
 }
+
+ScoreTableView::~ScoreTableView()
+{
+
+}

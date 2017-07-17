@@ -12,9 +12,10 @@ PropObject::PropObject(QString nombre,ReCallController* controller)
     QObject::connect(staticAnimationTimer,SIGNAL(timeout()),this,SLOT(nextSvgName()));
 }
 
-
+#include <iostream>
 PropObject::~PropObject()
 {
+ std::cout<<"Prop se elimina :"<<this->elementId().toStdString()<<std::endl;
  delete this->staticAnimationTimer;
 }
 
@@ -25,7 +26,7 @@ void PropObject::startStaticAnimations(const int duration)
 
 void PropObject::nextSvgName()
 {
-    currentSVG = ++currentSVG % (svgs.size()-1);
+    currentSVG = (++currentSVG) % (svgs.size()-1);
     this->setElementId( svgs[currentSVG]);
     //this->moveBy(5,0);
     update();

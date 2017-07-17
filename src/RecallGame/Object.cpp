@@ -80,9 +80,10 @@ void Object::setMeAsCurrentQueueTop()
     *(currentTop) = this->elementId();
 }
 
-
+#include <iostream>
  Object::~Object()
  {
+     std::cout<<this->elementId().toStdString()<<" se destruye"<<std::endl;
     delete this->m_animation;
     delete this->m_animation2;
  }
