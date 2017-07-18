@@ -2,6 +2,7 @@
 
 ScoreTableView::ScoreTableView()
     :QTableView()
+    ,pointer(Q_NULLPTR)
 {
    this->setWindowTitle("Players Score");
    QHeaderView* horizontalHeader = this->horizontalHeader();
@@ -20,7 +21,13 @@ ScoreTableView::~ScoreTableView()
 void ScoreTableView::setSize(const qreal w, const qreal h)
 {
     this->setMaximumHeight(h);
-    this->setMaximumHeight(w);
+    this->setMaximumWidth(w);
     this->setMinimumHeight(h);
     this->setMinimumWidth(w);
+}
+#include <iostream>
+void ScoreTableView::closeEvent(QCloseEvent *event)
+{
+    std::cout<<"Elimino puntero del modelo anterior"<<std::endl;
+    delete this->pointer;
 }

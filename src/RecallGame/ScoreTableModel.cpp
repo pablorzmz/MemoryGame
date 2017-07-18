@@ -2,7 +2,7 @@
 
 ScoreTableMode::ScoreTableMode(QObject *parent)
     :QAbstractTableModel(parent)
-    ,nCurrentRows(1)
+    ,nCurrentRows(0)
 {
 
 }
@@ -18,12 +18,12 @@ int ScoreTableMode::columnCount(const QModelIndex & /*parent*/) const
 }
 
 QVariant ScoreTableMode::data(const QModelIndex &index, int role) const
-{
+{    
     if (role == Qt::DisplayRole)
     {
-       return QString("Fila%1, Columna%2")
-                   .arg(index.row() + 1)
-                   .arg(index.column() +1);
+
+     return QString(this->scoresValues[index.row()][index.column()]);
+
     }
     return QVariant();
 }
@@ -45,4 +45,40 @@ QVariant ScoreTableMode::headerData(int section, Qt::Orientation orientation, in
         }
     }
     return QVariant();
+}
+
+#include <iostream>
+void ScoreTableMode::loadScores()
+{
+
+
+    QFile scoresFile("../build/GameScores.txt");
+
+    if(!scoresFile.open(QIODevice::ReadOnly))
+    {
+
+    }else
+    {
+        QTextStream in(&scoresFile);
+
+        while(in.atEnd()==false)
+        {
+            QString line= in.readLine();
+            QStringList temp = line.split(" ");
+            if(temp.size()!=0)
+            {
+                this->scoresValues.push_back(temp);
+            }
+        }
+        std::cout<<"items "<<this->scoresValues.size()<<std::endl;
+        if(this->scoresValues.size()!=0)
+        {
+            this->nCurrentRows = this->scoresValues.size();
+        }else
+        {
+            this->nCurrentRows=0;
+        }
+        scoresFile.close();
+
+    }
 }

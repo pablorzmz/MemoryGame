@@ -71,6 +71,7 @@ void ReCallMainView::initComponents(QGraphicsScene* m_scene)
     m_scene->addItem(m_score_button);
     m_score_button->setZValue(1);
     m_score_button->setPos(50,65);
+    m_score_button->setEnabled(false);
 
     m_reset_button = new PropObject("reset");
     m_reset_button->setSharedRenderer(m_svgRenderer);

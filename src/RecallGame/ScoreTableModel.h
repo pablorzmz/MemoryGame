@@ -2,6 +2,10 @@
 #define SCORETABLEMODEL_H
 
 #include <QAbstractTableModel>
+#include <QFile>
+#include <QStringList>
+#include <QTextStream>
+#include <QVector>
 
 class ScoreTableMode:public QAbstractTableModel
 {
@@ -13,6 +17,9 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
     int nCurrentRows;
+    void loadScores();
+    QVector<QStringList> scoresValues;
+    inline void incrementRows(){this->nCurrentRows+=1;}
 
 };
 

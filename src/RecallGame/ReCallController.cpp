@@ -10,7 +10,7 @@ ReCallController::ReCallController(int &argc, char **argv, int flags)
     ,levelLauchSpeed(1000)
     ,m_messages(Q_NULLPTR)
     ,viewScores()
-    ,modelScores(0)
+    ,modelScores(Q_NULLPTR)
 {   
 
     this->m_scene = new QGraphicsScene();
@@ -283,10 +283,16 @@ void ReCallController::resetFromButton()
 
 void ReCallController::showScoresTable()
 {
-    this->viewScores.setModel(&this->modelScores);
+    this->modelScores = new ScoreTableMode(0);
+    this->modelScores->loadScores();
+    this->viewScores.setModel(&(*this->modelScores));
+    this->viewScores.setModelPointer(this->modelScores);
     this->viewScores.show();
+    //delete this->modelScores;
 }
-#include <QDir>
+
+
+
 void ReCallController::askForPlayerName()
 {
     this->m_messages->close();
@@ -308,21 +314,23 @@ void ReCallController::askForPlayerName()
 
 void ReCallController::insertCurrentUserScore()
 {
-    std::cout<<"Guardo :"<<std::endl;
-
-    system("mkdir ../build/GameScores.txt");
 
     QFile scoresFile("../build/GameScores.txt");
 
-    if(!scoresFile.open(QIODevice::ReadWrite))
+    if(!scoresFile.open(QIODevice::WriteOnly | QIODevice::Append))
     {
+        this->m_view->m_score_button->setEnabled(true);
         std::cout<<"Could not open file :"<<scoresFile.errorString().toStdString()<<std::endl;
+        std::cout<<"File will be created"<<std::endl;
+        system("mkdir ../build/GameScores.txt");
+        this->insertCurrentUserScore();
     }else
     {
+       this->m_view->m_score_button->setEnabled(true);
         QTextStream out(&scoresFile);
+
         out<<this->mySettings.playerName<<" "<<this->mySettings.gameDifficulty<<"/"<<this->reCallGameLevel
           <<" "<<this->mySettings.playerScore<<"\n";
-
          scoresFile.close();
 
     }

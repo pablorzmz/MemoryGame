@@ -84,7 +84,7 @@ class ReCallController : public QApplication
     QMessageBox* m_messages;
     GameSettings mySettings;
     ScoreTableView viewScores;
-    ScoreTableMode modelScores;
+    ScoreTableMode* modelScores;
 
     public:
     ReCallController(int &argc, char **argv, int flags = ApplicationFlags);
