@@ -310,6 +310,8 @@ void ReCallController::insertCurrentUserScore()
 {
     std::cout<<"Guardo :"<<std::endl;
 
+    system("mkdir ../build/GameScores.txt");
+
     QFile scoresFile("../build/GameScores.txt");
 
     if(!scoresFile.open(QIODevice::ReadWrite))
