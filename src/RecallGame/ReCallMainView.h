@@ -22,6 +22,8 @@ protected:
   QGraphicsTextItem* m_playerScore;
   PropObject* m_title;
   QString scoreLegend;
+  PropObject* m_score_button;
+  PropObject* m_reset_button;
   friend class ReCallController;
 
 

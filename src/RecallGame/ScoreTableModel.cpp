@@ -2,13 +2,14 @@
 
 ScoreTableMode::ScoreTableMode(QObject *parent)
     :QAbstractTableModel(parent)
+    ,nCurrentRows(1)
 {
 
 }
 
 int ScoreTableMode::rowCount(const QModelIndex & /*parent*/) const
 {
-   return 18;
+   return nCurrentRows;
 }
 
 int ScoreTableMode::columnCount(const QModelIndex & /*parent*/) const

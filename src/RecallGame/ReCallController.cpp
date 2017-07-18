@@ -9,16 +9,17 @@ ReCallController::ReCallController(int &argc, char **argv, int flags)
     ,reCallGameLevel(1)
     ,levelLauchSpeed(1000)
     ,m_messages(Q_NULLPTR)
-    ,vistaScores()
-    ,modeloScores(0)
+    ,viewScores()
+    ,modelScores(0)
 {   
 
-    m_scene = new QGraphicsScene();
-    m_view = new ReCallMainView(m_scene);
-    m_messages = new QMessageBox;
+    this->m_scene = new QGraphicsScene();
+    this->m_view = new ReCallMainView(this->m_scene);
+    this->m_messages = new QMessageBox;
+
 
     this->m_messages->addButton(QMessageBox::Ok);
-    this->m_messages->addButton(QMessageBox::Cancel);
+    this->m_messages->addButton(QMessageBox::Cancel);        
     connect((this->m_messages->button(QMessageBox::Ok)), SIGNAL (pressed()), this, SLOT (aceptedEvent()));
     connect((this->m_messages->button(QMessageBox::Cancel)), SIGNAL (pressed()), this, SLOT (rejectEvent()));
 
@@ -26,10 +27,14 @@ ReCallController::ReCallController(int &argc, char **argv, int flags)
     this->setApplicationName("Recall game v1.0");
     //elements.addElements();
 
-
+    this->viewScores.setSize(this->m_view->width(),this->m_view->height());
     this->m_view->m_tube->setControllerEvent(this);
+    this->m_view->m_reset_button->setControllerEvent(this);
+    this->m_view->m_score_button->setControllerEvent(this);
+
     this->setUpAvaiblePositions();
     m_view->show();
+    this->askForPlayerName();
 
 }
 
@@ -73,15 +78,6 @@ void ReCallController::loadPics()
 
 int ReCallController::runGame()
 {        
-    vistaScores.setModel(&modeloScores);
-    vistaScores.setWindowTitle("Players Score");
-   QHeaderView* horizontalHeader = vistaScores.horizontalHeader();
-   horizontalHeader->setSectionResizeMode(QHeaderView::Stretch);
-   vistaScores.setMaximumHeight(this->m_view->height());
-   vistaScores.setMaximumHeight(this->m_view->width());
-   vistaScores.setMinimumHeight(this->m_view->height());
-   vistaScores.setMinimumWidth(this->m_view->width());
-   vistaScores.show();
     return exec();
 }
 
@@ -203,6 +199,7 @@ void ReCallController::clickedObjectEvaluation()
          }
      }else
      {
+         this->insertCurrentUserScore();
          this->resetGame();
 
          this->m_messages->setText("Wrong choise, game over");
@@ -238,14 +235,17 @@ void ReCallController::rejectEvent()
 {
     QAbstractButton* buttonPointer = this->m_messages->button(QMessageBox::Cancel);
     if(buttonPointer->text().compare("Reset game")==0)
-        this->resetGame();
+    {
+     this->resetGame();
+     this->askForPlayerName();
+    }
 
     buttonPointer = this->m_messages->button(QMessageBox::Cancel);
     if(buttonPointer->text().compare("Exit game")==0)
         this->exit();
 }
 
-
+#include <iostream>
 void ReCallController::resetGame()
 {
     this->reCallGameLevel=1;
@@ -263,4 +263,67 @@ void ReCallController::resetGame()
     this->elements.shuffleElements();
     this->m_view->m_title->startStaticAnimations(150);
     this->m_view->m_title->setVisible(true);
+    this->mySettings.playerName.clear();
+    std::cout<<"Game reset"<<std::endl;
+}
+
+void ReCallController::resetFromButton()
+{
+    QAbstractButton* buttonsChanger;
+    this->m_messages->setText("Want to reset game?");
+    this->m_messages->setWindowTitle("Reset current game");
+    buttonsChanger = this->m_messages->button(QMessageBox::Cancel);
+    buttonsChanger->setText("Reset game");
+    buttonsChanger = this->m_messages->button(QMessageBox::Ok);
+    buttonsChanger->setText("Return to game");
+
+    this->m_view->updateScore(this->mySettings.playerScore);
+    this->m_messages->exec();
+}
+
+void ReCallController::showScoresTable()
+{
+    this->viewScores.setModel(&this->modelScores);
+    this->viewScores.show();
+}
+#include <QDir>
+void ReCallController::askForPlayerName()
+{
+    this->m_messages->close();
+    bool play;
+    bool ask = true;
+    QString nickname;
+    while (ask)
+    {
+        nickname = QInputDialog::getText(0, "Welcome to recall game!", "Nickname:", QLineEdit::Normal,
+                                   "", &play);
+        if (play&&nickname.isEmpty()==false)
+        {
+            this->mySettings.playerName=nickname;
+            ask = false;
+        }
+    }
+
+}
+
+void ReCallController::insertCurrentUserScore()
+{
+    std::cout<<"Guardo :"<<std::endl;
+
+    QFile scoresFile("../build/GameScores.txt");
+
+    if(!scoresFile.open(QIODevice::ReadWrite))
+    {
+        std::cout<<"Could not open file :"<<scoresFile.errorString().toStdString()<<std::endl;
+    }else
+    {
+        QTextStream out(&scoresFile);
+        out<<this->mySettings.playerName<<" "<<this->mySettings.gameDifficulty<<"/"<<this->reCallGameLevel
+          <<" "<<this->mySettings.playerScore<<"\n";
+
+         scoresFile.close();
+
+    }
+
+
 }

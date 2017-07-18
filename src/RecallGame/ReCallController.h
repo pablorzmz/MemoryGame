@@ -4,7 +4,9 @@
 #include "Elements.h"
 #include <chrono>
 #include <QApplication>
+#include <QFile>
 #include <QGraphicsScene>
+#include <QInputDialog>
 #include <QMessageBox>
 #include <QPoint>
 #include <QPushButton>
@@ -12,6 +14,7 @@
 #include <QSequentialAnimationGroup>
 #include <QSvgRenderer>
 #include <QtMath>
+#include <QTextStream>
 #include <QVector>
 #include <random>
 #include "ReCallMainView.h"
@@ -80,8 +83,8 @@ class ReCallController : public QApplication
     QQueue<QString> gameOrderQueue;
     QMessageBox* m_messages;
     GameSettings mySettings;
-    ScoreTableView vistaScores;
-    ScoreTableMode modeloScores;
+    ScoreTableView viewScores;
+    ScoreTableMode modelScores;
 
     public:
     ReCallController(int &argc, char **argv, int flags = ApplicationFlags);
@@ -96,12 +99,17 @@ class ReCallController : public QApplication
     void suffleAvaiblePositions();
     void resetGame();
     inline void incrementScore(){this->mySettings.playerScore+=mySettings.scoreIncrement;}
+    void resetFromButton();
+    void showScoresTable();
+    void askForPlayerName();
+    void insertCurrentUserScore();
 
     private slots:
     void incrementNextLevel();
     void clickedObjectEvaluation();
     void aceptedEvent();
     void rejectEvent();
+
 
 };
 

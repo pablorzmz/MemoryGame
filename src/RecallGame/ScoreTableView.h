@@ -11,6 +11,7 @@ class ScoreTableView :public QTableView
 public:
     ScoreTableView();
     ~ScoreTableView();
+    void setSize(const qreal w,const qreal h);
 };
 
 #endif // SCORETABLEVIEW_H

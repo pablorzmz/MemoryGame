@@ -28,7 +28,6 @@ void PropObject::nextSvgName()
 {
     currentSVG = (++currentSVG) % (svgs.size()-1);
     this->setElementId( svgs[currentSVG]);
-    //this->moveBy(5,0);
     update();
 }
 
@@ -63,6 +62,16 @@ void PropObject::mousePressEvent(QGraphicsSceneMouseEvent *event)
         lauchControl=false;
         this->setEnabled(false);
         }
+
+    if(this->elementId().compare("reset")==0)
+    {
+        this->m_controller->resetFromButton();
+    }
+
+    if(this->elementId().compare("scores")==0)
+    {
+        this->m_controller->showScoresTable();
+    }
 }
 
 void PropObject::setControllerEvent(ReCallController *controller)

@@ -8,6 +8,8 @@ ReCallMainView::ReCallMainView(QGraphicsScene *scene)
     ,m_playerScore(Q_NULLPTR)
     ,m_title(Q_NULLPTR)
     ,scoreLegend("Player score: ")
+    ,m_score_button(Q_NULLPTR)
+    ,m_reset_button(Q_NULLPTR)
 {
 
 }
@@ -62,6 +64,19 @@ void ReCallMainView::initComponents(QGraphicsScene* m_scene)
     m_title->addSvgName("title8");
     m_title->addSvgName("title9");
     m_title->startStaticAnimations(150);
+
+
+    m_score_button = new PropObject("scores");
+    m_score_button->setSharedRenderer(m_svgRenderer);
+    m_scene->addItem(m_score_button);
+    m_score_button->setZValue(1);
+    m_score_button->setPos(50,65);
+
+    m_reset_button = new PropObject("reset");
+    m_reset_button->setSharedRenderer(m_svgRenderer);
+    m_scene->addItem(m_reset_button);
+    m_reset_button->setZValue(1);
+    m_reset_button->setPos(80,66);
 
     this->setWindowFlags(Qt::Window | Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint);
     this->setMaximumHeight(this->height());
