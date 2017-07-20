@@ -1,4 +1,6 @@
 *build*/
 *.user*
 *.o
+docs/html
+docs/latex
 

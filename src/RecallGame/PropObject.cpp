@@ -4,8 +4,8 @@ PropObject::PropObject(QString nombre,ReCallController* controller)
     :QGraphicsSvgItem()
     ,m_controller(controller)
     ,staticAnimationTimer(Q_NULLPTR)
-    ,lauchControl(true)
     ,currentSVG(1)
+    ,lauchControl(true)
 {
     this->setElementId(nombre);
     staticAnimationTimer = new QTimer(this);
@@ -26,7 +26,8 @@ void PropObject::startStaticAnimations(const int duration)
 
 void PropObject::nextSvgName()
 {
-    currentSVG = (++currentSVG) % (svgs.size()-1);
+    ++currentSVG;
+    currentSVG = (currentSVG) % (svgs.size()-1);
     this->setElementId( svgs[currentSVG]);
     update();
 }
@@ -72,6 +73,7 @@ void PropObject::mousePressEvent(QGraphicsSceneMouseEvent *event)
     {
         this->m_controller->showScoresTable();
     }
+
 }
 
 void PropObject::setControllerEvent(ReCallController *controller)

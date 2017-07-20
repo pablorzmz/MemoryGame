@@ -18,8 +18,8 @@ private:
     int currentSVG;
 
 public:
-    bool lauchControl;
     PropObject(QString nombre,ReCallController* controller=Q_NULLPTR);
+    bool lauchControl;
     ~PropObject();
     void setStartPosition(const qreal x = 0, const qreal y=0);
     void setControllerEvent( ReCallController* controller);
