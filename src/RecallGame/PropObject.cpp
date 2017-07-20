@@ -1,13 +1,13 @@
 #include "PropObject.h"
 
-PropObject::PropObject(QString nombre,ReCallController* controller)
+PropObject::PropObject(QString name,ReCallController* controller)
     :QGraphicsSvgItem()
     ,m_controller(controller)
     ,staticAnimationTimer(Q_NULLPTR)
     ,currentSVG(1)
     ,lauchControl(true)
 {
-    this->setElementId(nombre);
+    this->setElementId(name);
     staticAnimationTimer = new QTimer(this);
     QObject::connect(staticAnimationTimer,SIGNAL(timeout()),this,SLOT(nextSvgName()));
 }

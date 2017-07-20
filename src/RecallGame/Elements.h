@@ -12,16 +12,18 @@
 #include <QVector>
 #include <random>
 
-
+/*! Forward declaration of class Object*/
 class Object;
+
+/*! class Elements that is used to store the elements that are lauched during game */
 class Elements
 {
 private:
-    QVector<QString> svgNames;
+    QVector<QString> svgNames; /**< QVector of QString object that contains the svg names of elements*/
 
 public:
-    QVector<Object*> svgElements;
-    QString* currenTop;
+    QVector<Object*> svgElements; /**< QVector of Object* pointer that contains the memory directions of elements */
+    QString* currenTop; /**< Pointer to QString object that is used to control the current top of selected elementes during game*/
 
 public:
     /**

@@ -104,7 +104,7 @@ ReCallMainView::~ReCallMainView()
 }
 
 #include <QFont>
-void ReCallMainView::updateScore(int& newScoreText)
+void ReCallMainView::updateScore(const int &newScoreText)
 {
     this->m_playerScore->setPlainText( QString("%1: %2").arg(this->scoreLegend).arg(newScoreText));
 }

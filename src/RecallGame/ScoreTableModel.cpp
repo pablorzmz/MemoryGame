@@ -1,23 +1,23 @@
 #include "ScoreTableModel.h"
 
-ScoreTableMode::ScoreTableMode(QObject *parent)
+ScoreTableModel::ScoreTableModel(QObject *parent)
     :QAbstractTableModel(parent)
     ,nCurrentRows(0)
 {
 
 }
 
-int ScoreTableMode::rowCount(const QModelIndex & /*parent*/) const
+int ScoreTableModel::rowCount(const QModelIndex & /*parent*/) const
 {
    return nCurrentRows;
 }
 
-int ScoreTableMode::columnCount(const QModelIndex & /*parent*/) const
+int ScoreTableModel::columnCount(const QModelIndex & /*parent*/) const
 {
     return 3;
 }
 
-QVariant ScoreTableMode::data(const QModelIndex &index, int role) const
+QVariant ScoreTableModel::data(const QModelIndex &index, int role) const
 {    
     if (role == Qt::DisplayRole)
     {
@@ -28,7 +28,7 @@ QVariant ScoreTableMode::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-QVariant ScoreTableMode::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant ScoreTableModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if (role == Qt::DisplayRole)
     {
@@ -47,10 +47,8 @@ QVariant ScoreTableMode::headerData(int section, Qt::Orientation orientation, in
     return QVariant();
 }
 
-void ScoreTableMode::loadScores()
+void ScoreTableModel::loadScores()
 {
-
-
     QFile scoresFile("../build/GameScores.txt");
 
     if(!scoresFile.open(QIODevice::ReadOnly))

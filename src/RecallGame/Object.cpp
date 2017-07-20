@@ -1,6 +1,6 @@
 #include "Object.h"
 
-Object::Object(QString nombre, QString* ElementsCurrentTop)
+Object::Object(QString name, QString* ElementsCurrentTop)
     :QGraphicsSvgItem()
     ,m_animation(Q_NULLPTR)
     ,m_animation2(Q_NULLPTR)
@@ -8,7 +8,7 @@ Object::Object(QString nombre, QString* ElementsCurrentTop)
     ,pastX(0)
     ,pastY(0)
 {
-    this->setElementId(nombre);
+    this->setElementId(name);
     m_animation = new QPropertyAnimation(this,"pos");
     m_animation2 = new QPropertyAnimation(this,"pos");
 }
@@ -27,7 +27,7 @@ void Object::setStartPosition(const qreal x, const qreal y)
         }
 }
 
-void Object::setAnimation(int animationNumber,int duration,const qreal finalX, const qreal finalY, const qreal startX, const qreal startY)
+void Object::setUpAnimation(const int animationNumber, const int duration, const qreal finalX, const qreal finalY, const qreal startX, const qreal startY)
 {
     if(animationNumber==1)
     {
@@ -67,7 +67,7 @@ void Object::setAnimation(int animationNumber,int duration,const qreal finalX, c
 void Object::mousePressEvent(QGraphicsSceneMouseEvent * event)
 {
     //std::cout<<"TOUCHED("<<this->elementId().toStdString()<<")"<<std::endl;
-    this->setAnimation(2,200,pastX,pastY,this->x(),this->y());
+    this->setUpAnimation(2,200,pastX,pastY,this->x(),this->y());
     this->m_animation2->start();
     this->pastX=this->x();
     this->pastY=this->y();

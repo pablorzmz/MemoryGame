@@ -130,7 +130,7 @@ void ReCallController::connectControlAnimationSignals()
 
 void ReCallController::setUpLevelAnimation(const int duration,const int index,const qreal endX,const qreal endY,const qreal beginX,const qreal beginY)
 {
-  this->elements.svgElements[index]->setAnimation(1,duration,endX,endY,beginX,beginY);
+  this->elements.svgElements[index]->setUpAnimation(1,duration,endX,endY,beginX,beginY);
 }
 
 void ReCallController::setUpAvaiblePositions()
@@ -214,7 +214,7 @@ void ReCallController::clickedObjectEvaluation()
      QAbstractButton* modifyTexts = Q_NULLPTR;
      if((this->gameOrderQueue.first().toStdString())==(this->elements.currenTop->toStdString()))
      {
-         this->incrementScore();
+         this->increaseScore();
 
          this->elements.shuffleElements();
          this->suffleAvaiblePositions();
@@ -361,7 +361,7 @@ void ReCallController::showScoresTable()
     m_currentSound->play();
     #endif
 
-    this->modelScores = new ScoreTableMode(0);
+    this->modelScores = new ScoreTableModel(0);
     this->modelScores->loadScores();
     this->viewScores.setModel(&(*this->modelScores));
     this->viewScores.setModelPointer(this->modelScores);
