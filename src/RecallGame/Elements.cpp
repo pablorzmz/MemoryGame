@@ -3,6 +3,7 @@
 Elements::Elements()
 {
     this->currenTop = new QString("No top yet");
+
 }
 
 //#include <iostream>

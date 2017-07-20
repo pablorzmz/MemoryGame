@@ -12,11 +12,13 @@
 #include <QVector>
 #include <random>
 
+
 class Object;
 class Elements
 {
 private:
     QVector<QString> svgNames;
+
 public:
     QVector<Object*> svgElements;
     QString* currenTop;

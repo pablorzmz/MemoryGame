@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#define SOUNDS
 #include "Elements.h"
 #include <chrono>
 #include <QApplication>
@@ -22,6 +23,11 @@
 #include "ScoreTableModel.h"
 #include "ScoreTableView.h"
 
+#ifdef SOUNDS
+    #include <QMediaPlaylist>
+    #include <QMediaPlayer>
+#endif
+
 
 class QGraphicsScene;
 class ReCallMainView;
@@ -34,7 +40,7 @@ class ReCallController : public QApplication
     class GameSettings
     {
     public:
-        const int maxGameLevels = 15;
+        const int maxGameLevels = 4;
         int scoreIncrement;
         const QString textPlayscoreLabel ="Player score: ";
         QString playerName;
@@ -85,9 +91,14 @@ class ReCallController : public QApplication
     GameSettings mySettings;
     ScoreTableView viewScores;
     ScoreTableMode* modelScores;
+    #ifdef SOUNDS
+        QMediaPlayer*  m_currentSound;
+        QMediaPlaylist* m_backGroundMusic;
+        QMediaPlayer*  m_backGroundSound;
+    #endif
 
     public:
-    ReCallController(int &argc, char **argv, int flags = ApplicationFlags);
+    ReCallController(int &argc, char **argv);
     /// Destructor
     ~ReCallController();
     int runGame();

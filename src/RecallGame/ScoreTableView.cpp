@@ -28,6 +28,5 @@ void ScoreTableView::setSize(const qreal w, const qreal h)
 #include <iostream>
 void ScoreTableView::closeEvent(QCloseEvent *event)
 {
-    std::cout<<"Elimino puntero del modelo anterior"<<std::endl;
     delete this->pointer;
 }

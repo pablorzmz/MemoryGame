@@ -47,7 +47,6 @@ QVariant ScoreTableMode::headerData(int section, Qt::Orientation orientation, in
     return QVariant();
 }
 
-#include <iostream>
 void ScoreTableMode::loadScores()
 {
 
@@ -70,7 +69,6 @@ void ScoreTableMode::loadScores()
                 this->scoresValues.push_back(temp);
             }
         }
-        std::cout<<"items "<<this->scoresValues.size()<<std::endl;
         if(this->scoresValues.size()!=0)
         {
             this->nCurrentRows = this->scoresValues.size();

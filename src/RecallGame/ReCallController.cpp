@@ -1,7 +1,7 @@
 #include "ReCallController.h"
 
-ReCallController::ReCallController(int &argc, char **argv, int flags)
-    : QApplication(argc, argv, flags)
+ReCallController::ReCallController(int &argc, char **argv)
+    : QApplication(argc, argv)
     ,m_scene(Q_NULLPTR)
     ,m_view(Q_NULLPTR)
     ,m_launchAnimation(Q_NULLPTR)
@@ -11,7 +11,27 @@ ReCallController::ReCallController(int &argc, char **argv, int flags)
     ,m_messages(Q_NULLPTR)
     ,viewScores()
     ,modelScores(Q_NULLPTR)
+    #ifdef SOUNDS
+    ,m_currentSound(Q_NULLPTR)
+    ,m_backGroundMusic(Q_NULLPTR)
+    ,m_backGroundSound(Q_NULLPTR)
+    #endif
 {   
+
+    QApplication::setDesktopSettingsAware(false);
+    #ifdef SOUNDS
+    m_currentSound = new QMediaPlayer();
+
+    m_backGroundMusic = new QMediaPlaylist();
+    m_backGroundMusic->addMedia(QUrl("qrc::/../Sounds/backGroundMusic.wav"));
+    m_backGroundMusic->setCurrentIndex(0);
+    m_backGroundMusic->setPlaybackMode(QMediaPlaylist::CurrentItemInLoop);
+
+    m_backGroundSound = new QMediaPlayer();
+    m_backGroundSound->setPlaylist(m_backGroundMusic);
+    m_backGroundSound->setVolume(50);
+    m_backGroundSound->play();
+    #endif
 
     this->m_scene = new QGraphicsScene();
     this->m_view = new ReCallMainView(this->m_scene);
@@ -41,6 +61,7 @@ ReCallController::ReCallController(int &argc, char **argv, int flags)
 void ReCallController::incrementNextLevel()
 {
     //std::cout<<"Animation finished"<<std::endl;
+
     this->m_view->m_tube->lauchControl=true;
     this->elements.setEnableLauchedObject(this->reCallGameLevel);
     if(this->reCallGameLevel<mySettings.maxGameLevels)
@@ -48,12 +69,20 @@ void ReCallController::incrementNextLevel()
         ++this->reCallGameLevel;
     }
     this->m_view->m_tube->stopStaticAnimations();
+    this->m_view->m_score_button->setEnabled(true);
+    this->m_view->m_reset_button->setEnabled(true);
 }
 
 void ReCallController::startGame()
 {
-    this->m_view->m_title->stopStaticAnimations();
-    this->m_view->m_title->setVisible(false);
+    #ifdef SOUNDS
+    m_currentSound->setMedia(QUrl("qrc::/../Sounds/mixItems.wav"));
+    m_currentSound->setVolume(50);
+    m_currentSound->play();
+    #endif
+
+   this->m_view->m_title->stopStaticAnimations();
+   this->m_view->m_title->setVisible(false);
    this->loadPics();
 }
 
@@ -74,6 +103,8 @@ void ReCallController::loadPics()
     }
     this->connectControlAnimationSignals();
     this->m_launchAnimation->start();
+    this->m_view->m_score_button->setEnabled(false);
+    this->m_view->m_reset_button->setEnabled(false);
 }
 
 int ReCallController::runGame()
@@ -165,13 +196,22 @@ ReCallController::~ReCallController()
     delete m_scene;
     delete m_view;
     delete m_messages;
+    #ifdef SOUNDS
+    delete m_currentSound;
+    delete m_backGroundMusic;
+    delete m_backGroundSound;
+    #endif
     std::cout<<"Controlador se destruye"<<std::endl;
 }
 
 
 void ReCallController::clickedObjectEvaluation()
 {
-     QAbstractButton* modifyTexts;
+    #ifdef SOUNDS
+    m_currentSound->setMedia(QUrl("qrc::/../Sounds/touch.wav"));
+    m_currentSound->play();
+    #endif
+     QAbstractButton* modifyTexts = Q_NULLPTR;
      if((this->gameOrderQueue.first().toStdString())==(this->elements.currenTop->toStdString()))
      {
          this->incrementScore();
@@ -188,17 +228,38 @@ void ReCallController::clickedObjectEvaluation()
              this->m_view->m_tube->setEnabled(true);
              if(this->reCallGameLevel==mySettings.maxGameLevels)
              {
-                 this->m_messages->setText("You passed the first 15 levels. Now it will become harder!");
-                 this->m_messages->setWindowTitle("Congratulations!");
-                 modifyTexts =modifyTexts = this->m_messages->button(QMessageBox::Ok);
-                 modifyTexts->setText("Go ahead!");
-                 modifyTexts =modifyTexts = this->m_messages->button(QMessageBox::Cancel);
-                 modifyTexts->setText("Exit game");
+                 if(mySettings.gameDifficulty==3)
+                 {
+                     this->insertCurrentUserScore();
+                     this->m_messages->setText("You passed the entire game! That is awesome! Thanks for playing");
+                     this->m_messages->setWindowTitle("Game over!");
+                     modifyTexts = this->m_messages->button(QMessageBox::Ok);
+                     modifyTexts->setVisible(false);
+                     modifyTexts = Q_NULLPTR;
+                     modifyTexts =this->m_messages->button(QMessageBox::Cancel);
+                     modifyTexts->setText("Exit game");
+                 }else
+                 {
+                     this->m_messages->setText("You passed the first 15 levels. Now it will become harder!");
+                     this->m_messages->setWindowTitle("Congratulations!");
+                     modifyTexts = this->m_messages->button(QMessageBox::Ok);
+                     modifyTexts->setText("Go ahead!");
+                     modifyTexts = Q_NULLPTR;
+                     modifyTexts =this->m_messages->button(QMessageBox::Cancel);
+                     modifyTexts->setText("Exit game");
+                 }
+
                  this->m_messages->exec();
              }
          }
      }else
      {
+        #ifdef SOUNDS
+        m_currentSound->setMedia(QUrl("qrc::/../Sounds/endGame.wav"));
+        m_currentSound->setVolume(50);
+        m_currentSound->play();
+        #endif
+
          this->insertCurrentUserScore();
          this->resetGame();
 
@@ -219,7 +280,10 @@ void ReCallController::aceptedEvent()
 {
     QAbstractButton* buttonPointer = this->m_messages->button(QMessageBox::Ok);
     if(buttonPointer->text().compare("Exit game")==0)
+    {
+        this->insertCurrentUserScore();
         this->exit();
+    }
 
     buttonPointer = this->m_messages->button(QMessageBox::Ok);
     if(buttonPointer->text().compare("Go ahead!")==0)
@@ -242,7 +306,10 @@ void ReCallController::rejectEvent()
 
     buttonPointer = this->m_messages->button(QMessageBox::Cancel);
     if(buttonPointer->text().compare("Exit game")==0)
+    {
+        this->insertCurrentUserScore();
         this->exit();
+    }
 }
 
 #include <iostream>
@@ -264,11 +331,16 @@ void ReCallController::resetGame()
     this->m_view->m_title->startStaticAnimations(150);
     this->m_view->m_title->setVisible(true);
     this->mySettings.playerName.clear();
-    std::cout<<"Game reset"<<std::endl;
 }
 
 void ReCallController::resetFromButton()
 {
+    #ifdef SOUNDS
+    m_currentSound->setMedia(QUrl("qrc::/../Sounds/buttonTouch.wav"));
+    m_currentSound->setVolume(100);
+    m_currentSound->play();
+    #endif
+
     QAbstractButton* buttonsChanger;
     this->m_messages->setText("Want to reset game?");
     this->m_messages->setWindowTitle("Reset current game");
@@ -282,7 +354,13 @@ void ReCallController::resetFromButton()
 }
 
 void ReCallController::showScoresTable()
-{
+{    
+    #ifdef SOUNDS
+    m_currentSound->setMedia(QUrl("qrc::/../Sounds/buttonTouch.wav"));
+    m_currentSound->setVolume(100);
+    m_currentSound->play();
+    #endif
+
     this->modelScores = new ScoreTableMode(0);
     this->modelScores->loadScores();
     this->viewScores.setModel(&(*this->modelScores));
@@ -296,7 +374,7 @@ void ReCallController::showScoresTable()
 void ReCallController::askForPlayerName()
 {
     this->m_messages->close();
-    bool play;
+    bool play = false;
     bool ask = true;
     QString nickname;
     while (ask)

@@ -2,5 +2,10 @@
     <qresource prefix="/">
         <file>../Assets/backgrounds.svg</file>
         <file>../Assets/pics.svg</file>
+        <file>../Sounds/touch.wav</file>
+        <file>../Sounds/mixItems.wav</file>
+        <file>../Sounds/buttonTouch.wav</file>
+        <file>../Sounds/endGame.wav</file>
+        <file>../Sounds/backGroundMusic.wav</file>
     </qresource>
 </RCC>

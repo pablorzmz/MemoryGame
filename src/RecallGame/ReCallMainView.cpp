@@ -23,8 +23,6 @@ void ReCallMainView::initComponents(QGraphicsScene* m_scene)
     m_scene->addItem(this->m_playerScore);
     this->m_playerScore->setPos(QPoint(0,0));
 
-
-
     //Configuración inicial del fondo
     this->paintBackGround(m_scene);
     //this->setBackgroundBrush(QBrush(Qt::white, Qt::SolidPattern));
@@ -71,7 +69,7 @@ void ReCallMainView::initComponents(QGraphicsScene* m_scene)
     m_scene->addItem(m_score_button);
     m_score_button->setZValue(1);
     m_score_button->setPos(50,65);
-    m_score_button->setEnabled(false);
+    //m_score_button->setEnabled(false);
 
     m_reset_button = new PropObject("reset");
     m_reset_button->setSharedRenderer(m_svgRenderer);
@@ -93,7 +91,6 @@ void ReCallMainView::paintBackGround(QGraphicsScene* m_scene){
  m_scene->addItem(m_backGround);
  this->fitInView(m_backGround,Qt::KeepAspectRatioByExpanding);
  m_backGround->setZValue(-1);
- m_backGround->setOpacity(0.5);
 }
 #include <iostream>
 ReCallMainView::~ReCallMainView()

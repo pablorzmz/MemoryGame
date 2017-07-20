@@ -72,6 +72,7 @@ void Object::mousePressEvent(QGraphicsSceneMouseEvent * event)
     this->pastX=this->x();
     this->pastY=this->y();
     setMeAsCurrentQueueTop();
+
 }
 
 void Object::setMeAsCurrentQueueTop()
@@ -83,8 +84,9 @@ void Object::setMeAsCurrentQueueTop()
 #include <iostream>
  Object::~Object()
  {
-     std::cout<<this->elementId().toStdString()<<" se destruye"<<std::endl;
+    std::cout<<this->elementId().toStdString()<<" se destruye"<<std::endl;
     delete this->m_animation;
     delete this->m_animation2;
  }
+
 
