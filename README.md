@@ -1,4 +1,4 @@
-# Juego de Memoria (v1.1)
+# Juego de Memoria (v1.1) 19/17/2017
 ### Mejoras de la versión 1.1
 -Se agregan sonidos al juego
 -Se agrega control de scores de los jugadores
