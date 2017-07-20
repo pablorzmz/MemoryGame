@@ -208,9 +208,10 @@ ReCallController::~ReCallController()
 void ReCallController::clickedObjectEvaluation()
 {
     #ifdef SOUNDS
-    m_currentSound->setMedia(QUrl("qrc::/../Sounds/touch.wav"));
-    m_currentSound->play();
+        m_currentSound->setMedia(QUrl("qrc::/../Sounds/touch.wav"));
+        m_currentSound->play();
     #endif
+
      QAbstractButton* modifyTexts = Q_NULLPTR;
      if((this->gameOrderQueue.first().toStdString())==(this->elements.currenTop->toStdString()))
      {
@@ -356,9 +357,9 @@ void ReCallController::resetFromButton()
 void ReCallController::showScoresTable()
 {    
     #ifdef SOUNDS
-    m_currentSound->setMedia(QUrl("qrc::/../Sounds/buttonTouch.wav"));
-    m_currentSound->setVolume(100);
-    m_currentSound->play();
+        m_currentSound->setMedia(QUrl("qrc::/../Sounds/buttonTouch.wav"));
+        m_currentSound->setVolume(100);
+        m_currentSound->play();
     #endif
 
     this->modelScores = new ScoreTableModel(0);
