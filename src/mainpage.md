@@ -1,6 +1,6 @@
 ### ReCall Game
 
-ReCall game is a kind of memory game that uses the player memory capacities to increment its difficulty. The player has to remember the order when object appear on the screen.
+ReCall game is a kind of memory game that uses the player memory capacities to increment its difficulty. The player has to remember the order when objects appear on the screen.
 
 ---
 
