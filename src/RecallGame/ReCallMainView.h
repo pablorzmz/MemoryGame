@@ -7,10 +7,11 @@
 #include "Object.h"
 #include "PropObject.h"
 #include "ReCallMainView.h"
-#include "ReCallController.h"
+
 
 class Object;
 class PropObject;
+
 
 /*! class ReCallMainView: main view of the application */
 class ReCallMainView:public QGraphicsView
@@ -62,7 +63,7 @@ public:
         @param newScoreText The integer value of the new player score to be shown;
         @return no return value for this method
     */
-    void updateScore(const int &newScoreText);
+    void updateScore(const QString playerName,const int &newScoreText);
 };
 
 #endif // RECALLMAINVIEW_H

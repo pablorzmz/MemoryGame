@@ -145,10 +145,10 @@ void ReCallController::setUpAvaiblePositions()
     QPoint* point2 = new QPoint(50,27);
     this->avaiblePositions.push_back(point2);
     //pos 4
-    QPoint* point3 = new QPoint(100,10);
+    QPoint* point3 = new QPoint(100,12);
     this->avaiblePositions.push_back(point3);
     //pos 5
-    QPoint* point4 = new QPoint(100,0);
+    QPoint* point4 = new QPoint(100,7);
     this->avaiblePositions.push_back(point4);
     //pos 6
     QPoint* point5 = new QPoint(70,35);
@@ -178,7 +178,7 @@ void ReCallController::setUpAvaiblePositions()
     QPoint* point13 = new QPoint(120,30);
     this->avaiblePositions.push_back(point13);
     //pos 15
-    QPoint* point14 = new QPoint(120,0);
+    QPoint* point14 = new QPoint(120,8);
     this->avaiblePositions.push_back(point14);
 
 }
@@ -220,7 +220,7 @@ void ReCallController::clickedObjectEvaluation()
          this->elements.shuffleElements();
          this->suffleAvaiblePositions();
 
-         this->m_view->updateScore(this->mySettings.playerScore);
+         this->m_view->updateScore(mySettings.playerName,this->mySettings.playerScore);
 
          this->gameOrderQueue.pop_front();
 
@@ -271,7 +271,7 @@ void ReCallController::clickedObjectEvaluation()
          modifyTexts = this->m_messages->button(QMessageBox::Ok);
          modifyTexts->setText("Exit game");
 
-         this->m_view->updateScore(this->mySettings.playerScore);
+         this->m_view->updateScore(mySettings.playerName,this->mySettings.playerScore);
          this->m_messages->exec();
 
      }
@@ -350,7 +350,7 @@ void ReCallController::resetFromButton()
     buttonsChanger = this->m_messages->button(QMessageBox::Ok);
     buttonsChanger->setText("Return to game");
 
-    this->m_view->updateScore(this->mySettings.playerScore);
+    this->m_view->updateScore(mySettings.playerName,this->mySettings.playerScore);
     this->m_messages->exec();
 }
 
@@ -385,6 +385,7 @@ void ReCallController::askForPlayerName()
         if (play&&nickname.isEmpty()==false)
         {
             this->mySettings.playerName=nickname;
+
             ask = false;
         }
     }
@@ -393,7 +394,6 @@ void ReCallController::askForPlayerName()
 
 void ReCallController::insertCurrentUserScore()
 {
-
     QFile scoresFile("../build/GameScores.txt");
 
     if(!scoresFile.open(QIODevice::WriteOnly | QIODevice::Append))

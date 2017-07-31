@@ -1,8 +1,9 @@
 #ifndef GRAPHICITEM_H
 #define GRAPHICITEM_H
 
+#include <QGraphicsSvgItem>
 
-class GraphicItem
+class GraphicItem: QGraphicsSvgItem
 {
 public:
     GraphicItem();

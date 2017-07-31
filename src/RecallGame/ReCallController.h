@@ -42,7 +42,7 @@ class ReCallController : public QApplication
     class GameSettings
     {
     public:
-        const int maxGameLevels = 4;
+        const int maxGameLevels = 16;
         int scoreIncrement;
         const QString textPlayscoreLabel ="Player score: ";
         QString playerName;

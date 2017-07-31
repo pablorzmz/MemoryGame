@@ -7,7 +7,7 @@ ReCallMainView::ReCallMainView(QGraphicsScene *scene)
     ,m_svgRenderer(Q_NULLPTR)
     ,m_playerScore(Q_NULLPTR)
     ,m_title(Q_NULLPTR)
-    ,scoreLegend("Player score: ")
+    ,scoreLegend("Player's score: ")
     ,m_score_button(Q_NULLPTR)
     ,m_reset_button(Q_NULLPTR)
 {
@@ -19,15 +19,15 @@ void ReCallMainView::initComponents(QGraphicsScene* m_scene)
     //Configuración de la etiqueta de score.
     this->m_playerScore = new QGraphicsTextItem(this->scoreLegend);
     this->m_playerScore->setDefaultTextColor(Qt::black);
-    this->m_playerScore->setFont(QFont("", 2));
+    this->m_playerScore->setFont(QFont("", 3));
     m_scene->addItem(this->m_playerScore);
-    this->m_playerScore->setPos(QPoint(0,0));
+    this->m_playerScore->setPos(QPoint(-2,0.2));
 
     //Configuración inicial del fondo
     this->paintBackGround(m_scene);
+
     //this->setBackgroundBrush(QBrush(Qt::white, Qt::SolidPattern));
     this->setSceneRect( m_backGround->sceneBoundingRect());
-
 
     //Se desactivan los scrollbars
     this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -68,14 +68,14 @@ void ReCallMainView::initComponents(QGraphicsScene* m_scene)
     m_score_button->setSharedRenderer(m_svgRenderer);
     m_scene->addItem(m_score_button);
     m_score_button->setZValue(1);
-    m_score_button->setPos(50,65);
+    m_score_button->setPos(120,0);
     //m_score_button->setEnabled(false);
 
     m_reset_button = new PropObject("reset");
     m_reset_button->setSharedRenderer(m_svgRenderer);
     m_scene->addItem(m_reset_button);
     m_reset_button->setZValue(1);
-    m_reset_button->setPos(80,66);
+    m_reset_button->setPos(110,1);
 
     this->setWindowFlags(Qt::Window | Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint);
     this->setMaximumHeight(this->height());
@@ -86,10 +86,11 @@ void ReCallMainView::initComponents(QGraphicsScene* m_scene)
 
 void ReCallMainView::paintBackGround(QGraphicsScene* m_scene){
  QSvgRenderer* svgRenderer = new QSvgRenderer(QString("::/../Assets/backgrounds.svg"), this);
- m_backGround = new PropObject("background2");
+ m_backGround = new PropObject("2");
  m_backGround->setSharedRenderer(svgRenderer);
  m_scene->addItem(m_backGround);
  this->fitInView(m_backGround,Qt::KeepAspectRatioByExpanding);
+ this->setFixedHeight(this->height());
  m_backGround->setZValue(-1);
 }
 #include <iostream>
@@ -104,7 +105,7 @@ ReCallMainView::~ReCallMainView()
 }
 
 #include <QFont>
-void ReCallMainView::updateScore(const int &newScoreText)
+void ReCallMainView::updateScore(const QString playerName, const int &newScoreText)
 {
-    this->m_playerScore->setPlainText( QString("%1: %2").arg(this->scoreLegend).arg(newScoreText));
+    this->m_playerScore->setPlainText( QString("%1's score: %2").arg(playerName).arg(newScoreText));
 }

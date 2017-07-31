@@ -30,7 +30,8 @@ SOURCES += main.cpp\
     Object.cpp \
     PropObject.cpp \
     ScoreTableModel.cpp \
-    ScoreTableView.cpp
+    ScoreTableView.cpp \
+    GraphicItem.cpp
 
 HEADERS  += \
     Elements.h \
@@ -39,7 +40,8 @@ HEADERS  += \
     Object.h \
     PropObject.h \
     ScoreTableModel.h \
-    ScoreTableView.h
+    ScoreTableView.h \
+    GraphicItem.h
 
 RESOURCES += \
     resources.qrc
