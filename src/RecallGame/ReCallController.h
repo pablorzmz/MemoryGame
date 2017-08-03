@@ -5,6 +5,7 @@
 #include "Elements.h"
 #include <chrono>
 #include <QApplication>
+#include <QDir>
 #include <QFile>
 #include <QGraphicsScene>
 #include <QInputDialog>
@@ -13,6 +14,7 @@
 #include <QPushButton>
 #include <QQueue>
 #include <QSequentialAnimationGroup>
+#include <QStandardPaths>
 #include <QSvgRenderer>
 #include <QtMath>
 #include <QTextStream>
@@ -49,13 +51,27 @@ class ReCallController : public QApplication
         int gameDifficulty;
         int speedDecrement;
         int playerScore;
+        QString appLocation;
     GameSettings()
     :scoreIncrement(2)
     ,playerName("")
     ,gameDifficulty(1)
     ,speedDecrement(100)
     ,playerScore(0)
-        {
+    ,appLocation("")
+        {      
+            appLocation = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+            QDir dir(appLocation);
+
+            if (!dir.exists())
+                dir.mkpath(appLocation);
+            if (!dir.exists("stadistics"))
+                dir.mkdir("stadistics");
+
+            dir.cd("stadistics");
+
+            appLocation = dir.absoluteFilePath("scores.txt");
+
         }
     void updateGameSettings()
     {

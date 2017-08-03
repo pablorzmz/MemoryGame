@@ -59,7 +59,7 @@ public:
         @details This method reads from scores file and fill the data to be displayed
         @return no return value for this method
     */
-    void loadScores();
+    void loadScores(const QString appLocation);
 
 };
 

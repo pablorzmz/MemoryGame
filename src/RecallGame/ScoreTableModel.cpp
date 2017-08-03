@@ -47,9 +47,9 @@ QVariant ScoreTableModel::headerData(int section, Qt::Orientation orientation, i
     return QVariant();
 }
 
-void ScoreTableModel::loadScores()
+void ScoreTableModel::loadScores(const QString appLocation)
 {
-    QFile scoresFile("../build/GameScores.txt");
+    QFile scoresFile(appLocation);
 
     if(!scoresFile.open(QIODevice::ReadOnly))
     {

@@ -9,6 +9,7 @@ ReCallController::ReCallController(int &argc, char **argv)
     ,reCallGameLevel(1)
     ,levelLauchSpeed(1000)
     ,m_messages(Q_NULLPTR)
+    ,mySettings()
     ,viewScores()
     ,modelScores(Q_NULLPTR)
     #ifdef SOUNDS
@@ -51,6 +52,18 @@ ReCallController::ReCallController(int &argc, char **argv)
     this->m_view->m_tube->setControllerEvent(this);
     this->m_view->m_reset_button->setControllerEvent(this);
     this->m_view->m_score_button->setControllerEvent(this);
+
+
+    QFile scoresFile(mySettings.appLocation);
+
+    if(!scoresFile.open(QIODevice::ReadOnly | QIODevice::Text | QIODevice::ReadWrite))
+    {
+        qDebug() << " Could not open file for writing "<<mySettings.appLocation;
+        //return;
+    }else
+    {
+        scoresFile.close();
+    }
 
     this->setUpAvaiblePositions();
     m_view->show();
@@ -363,7 +376,7 @@ void ReCallController::showScoresTable()
     #endif
 
     this->modelScores = new ScoreTableModel(0);
-    this->modelScores->loadScores();
+    this->modelScores->loadScores(mySettings.appLocation);
     this->viewScores.setModel(&(*this->modelScores));
     this->viewScores.setModelPointer(this->modelScores);
     this->viewScores.show();
@@ -394,14 +407,16 @@ void ReCallController::askForPlayerName()
 
 void ReCallController::insertCurrentUserScore()
 {
-    QFile scoresFile("../build/GameScores.txt");
+    QFile scoresFile(mySettings.appLocation);
 
     if(!scoresFile.open(QIODevice::WriteOnly | QIODevice::Append))
     {
         this->m_view->m_score_button->setEnabled(true);
+        /*
         std::cout<<"Could not open file :"<<scoresFile.errorString().toStdString()<<std::endl;
         std::cout<<"File will be created"<<std::endl;
         system("mkdir ../build/GameScores.txt");
+        */
         this->insertCurrentUserScore();
     }else
     {
@@ -413,6 +428,5 @@ void ReCallController::insertCurrentUserScore()
          scoresFile.close();
 
     }
-
 
 }
